@@ -1,13 +1,13 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { AiOutlineDelete } from "react-icons/ai"
 import uploadImageToCloudinary from "../../utils/uploadCloudinary.js"
 import { BASE_URL, token } from "../../config.js"
 import { toast } from "react-toastify"
-const Profile = ({doctorData}) => {
+const Profile = ({ doctorData }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        password:"",
+        password: "",
         phone: '',
         bio: '',
         gender: '',
@@ -21,6 +21,22 @@ const Profile = ({doctorData}) => {
         about: '',
         photo: null
     })
+    useEffect(() => {
+        setFormData({
+            name: doctorData?.name,
+            email: doctorData?.email,
+            phone: doctorData?.phone,
+            bio: doctorData?.bio,
+            gender:doctorData?.gender,
+            specialization: doctorData?.specialization,
+            ticketPrice: doctorData?.ticketPrice,
+            qualifications: doctorData?.qualifications ,
+            experiences: doctorData?.experiences,
+            timeSlots: doctorData?.timeSlots,
+            about: doctorData?.about,
+            photo: doctorData?.photo
+        })
+    }, [])
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -64,18 +80,17 @@ const Profile = ({doctorData}) => {
         e.preventDefault();
         // Logic to update profile
         try {
-            const res = await fetch(`${BASE_URL}/doctors/${doctorData._id}`,{
-                method:'PUT',
-                headers:{
-                    'content-type':'application/json',
+            const res = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json',
                     Authorization: `Bearer ${token}`
                 },
-                body:JSON.stringify(formData)
+                body: JSON.stringify(formData)
             })
-            console.log(token)
             const result = await res.json()
 
-            if(!res.ok){
+            if (!res.ok) {
                 throw Error(result.message)
             }
             toast.success(result.message)
@@ -104,10 +119,10 @@ const Profile = ({doctorData}) => {
 
     const addExperience = (e) => {
         e.preventDefault();
-        addItem('experiences',{ day: "", startingTime: "", endingTime: "" })
+        addItem('experiences', { day: "", startingTime: "", endingTime: "" })
     };
 
-    
+
     const handleExperienceChange = (event, index) => {
         handleReusableInputChangeFunc("experiences", index, event);
     };
@@ -121,7 +136,7 @@ const Profile = ({doctorData}) => {
         addItem("timeSlots", { day: "", startingTime: "", endingTime: "" });
     };
 
-    
+
     const handleTimeSlotChange = (event, index) => {
         handleReusableInputChangeFunc("timeSlots", index, event);
     };
@@ -167,9 +182,9 @@ const Profile = ({doctorData}) => {
                             <p className="form__lable">Chuyên khoa:</p>
                             <select name="specialization" value={formData.specialization} className="form__input py-3.5" onChange={handleInputChange}>
                                 <option value="">---------------Chọn---------------</option>
-                                <option value="surgeon">Bác sĩ phẫu thuật</option>
-                                <option value="neurologist">Bác sĩ thần kinh học</option>
-                                <option value="dematologist">Bác sĩ da liễu</option>
+                                <option value="Bác sĩ phẫu thuật">Bác sĩ phẫu thuật</option>
+                                <option value="Bác sĩ thần kinh học">Bác sĩ thần kinh học</option>
+                                <option value="Bác sĩ da liễu">Bác sĩ da liễu</option>
                             </select>
                         </div>
                         <div>
@@ -211,7 +226,7 @@ const Profile = ({doctorData}) => {
                     <button onClick={addQualification} className="bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer">Thêm chứng chỉ</button>
                 </div>
                 <div className="mb-5">
-                <p className="form__label">Kinh nghiệm:</p>
+                    <p className="form__label">Kinh nghiệm:</p>
                     {formData.experiences.map((item, index) => (<div key={index}>
                         <div>
                             <div className="grid grid-cols-2 gap-5">
@@ -221,17 +236,17 @@ const Profile = ({doctorData}) => {
                                 </div>
                                 <div>
                                     <p className="form__lable">Ngày kết thúc:</p>
-                                    <input type="date" name="endingDate" value={item.endingDate} className="form__input" onChange={e =>handleExperienceChange(e, index)} />
+                                    <input type="date" name="endingDate" value={item.endingDate} className="form__input" onChange={e => handleExperienceChange(e, index)} />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-5 mt-5">
                                 <div>
                                     <p className="form__lable">Chức vụ:</p>
-                                    <input type="text" name="position" value={item.position} className="form__input" onChange={e =>handleExperienceChange(e, index)} />
+                                    <input type="text" name="position" value={item.position} className="form__input" onChange={e => handleExperienceChange(e, index)} />
                                 </div>
                                 <div>
                                     <p className="form__lable">Bệnh viện:</p>
-                                    <input type="text" name="hospital" value={item.hospital} className="form__input" onChange={e=>handleExperienceChange(e, index)} />
+                                    <input type="text" name="hospital" value={item.hospital} className="form__input" onChange={e => handleExperienceChange(e, index)} />
                                 </div>
                             </div>
                             <button onClick={e => deleteExperience(e, index)} className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px] cursor-pointer"><AiOutlineDelete /></button>
@@ -246,7 +261,7 @@ const Profile = ({doctorData}) => {
                             <div className="grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5">
                                 <div>
                                     <p className="form__lable">Ngày:</p>
-                                    <select name="day" value={item.day} className="form__input py-3.5" onChange={e=>handleTimeSlotChange(e, index)}>
+                                    <select name="day" value={item.day} className="form__input py-3.5" onChange={e => handleTimeSlotChange(e, index)}>
                                         <option value="">----Chọn----</option>
                                         <option value="saturday">Thứ bảy</option>
                                         <option value="sunday">Chủ nhật</option>
@@ -259,14 +274,14 @@ const Profile = ({doctorData}) => {
                                 </div>
                                 <div>
                                     <p className="form__lable">Giờ bắt đầu:</p>
-                                    <input type="time" name="startingTime" value={item.startingTime} className="form__input" onChange={e=>handleTimeSlotChange(e, index)}/>
+                                    <input type="time" name="startingTime" value={item.startingTime} className="form__input" onChange={e => handleTimeSlotChange(e, index)} />
                                 </div>
                                 <div>
                                     <p className="form__lable">Giờ kết thúc:</p>
-                                    <input type="time" name="endingTime" value={item.endingTime} className="form__input" onChange={e=>handleTimeSlotChange(e,index)}/>
+                                    <input type="time" name="endingTime" value={item.endingTime} className="form__input" onChange={e => handleTimeSlotChange(e, index)} />
                                 </div>
                                 <div className="flex item-center">
-                                    <button onClick={e=>deleteTimeSlot(e,index)} className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-6 mb-[30px] cursor-pointer"><AiOutlineDelete /></button>
+                                    <button onClick={e => deleteTimeSlot(e, index)} className="bg-red-600 p-2 rounded-full text-white text-[18px] mt-6 mb-[30px] cursor-pointer"><AiOutlineDelete /></button>
                                 </div>
                             </div>
                         </div>

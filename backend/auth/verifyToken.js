@@ -31,19 +31,29 @@ export const authenticate = async (req, res, next) => {
   }
 };
 
-export const restrict = roles => async(req, res, next)=>{
-    const userId = req.userId
-    let user;
-    const patient = await User.findById(userId)
-    const doctor = await Doctor.findById(userId)
-    if(patient){
-        user=patient;
-    }else if(doctor){
-        user=doctor
-    }
+export const restrict = roles => async (req, res, next) => {
+  const userId = req.userId;
 
-    if(!roles.includes(user.role)){
-        return res.status(401).json({success:false, message:"Bạn không được uỷ quyền"})
-    }
-    next();
-}
+  try {
+      let user;
+      const patient = await User.findById(userId);
+      const doctor = await Doctor.findById(userId);
+
+      if (patient) {
+          user = patient;
+      } else if (doctor) {
+          user = doctor;
+      } else {
+          return res.status(404).json({ success: false, message: "Không tìm thấy người dùng" });
+      }
+
+      if (!roles.includes(user.role)) {
+          return res.status(401).json({ success: false, message: "Bạn không được ủy quyền để thực hiện hành động này" });
+      }
+
+      next(); // Cho phép tiếp tục đến middleware hoặc controller tiếp theo
+  } catch (error) {
+      console.error("Lỗi trong quá trình xác thực người dùng:", error);
+      return res.status(500).json({ success: false, message: "Đã xảy ra lỗi trong quá trình xác thực người dùng" });
+  }
+};

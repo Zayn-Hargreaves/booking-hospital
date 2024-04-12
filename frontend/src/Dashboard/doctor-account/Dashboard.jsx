@@ -7,11 +7,12 @@ import Tabs from "./Tabs.jsx";
 import starIcon from "../../assets/images/Star.png"
 import DoctorAbout from "../../components/Doctors/DoctorAbout.jsx"
 import Profile from "./Profile.jsx";
+import Appointments from "./Appointments.jsx";
 const Dashboard = () => {
     const { data, loading, error } = useGetProfile(`${BASE_URL}/doctors/profile/me`);
     const [tab, setTab] = useState("overview");
-
-    return (
+    console.log(data)
+    return (   
         <section>
             <div className="max-w-[1170px] px-5 mx-auto">
                 {loading && !error && <Loader />}
@@ -62,7 +63,7 @@ const Dashboard = () => {
                                     </div>
                                     <DoctorAbout name={data.name} about={data.about} qualifications={data.qualifications} experiences={data.experiences}/>
                                 </div>}
-                                {tab === 'appointments' && <div>overview</div>}
+                                {tab === 'appointments' && <Appointments appointments={data.appointments}/>}
                                 {tab === 'settings' && <Profile doctorData={data}/>}
 
                             </div>
