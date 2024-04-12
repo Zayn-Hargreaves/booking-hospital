@@ -3,6 +3,7 @@ import Booking from "../models/BookingSchema.js"
 import Doctor from "../models/DoctorSchema.js"
 export const updateUser = async (req, res)=>{
     const id = req.params.id
+    console.log(id)
     try {
         const updateUser= await User.findByIdAndUpdate(id, {$set:req.body}, {new:true} )
         res.status(200).json({success:true, message:"Cập nhật thành công", data:updateUser})

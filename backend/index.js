@@ -1,4 +1,4 @@
-import express from "express";
+import express from "express"
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import mongoose from "mongoose";
@@ -15,7 +15,9 @@ const port = process.env.PORT || 3000;
 app.get("/", (req, res) => {
     res.send("OK");
 });
-
+const corsOption = {
+    origin:true
+}
 // Kết nối đến cơ sở dữ liệu MongoDB
 mongoose.set('strictQuery', false)
 const connectDB = async () => {
@@ -34,7 +36,7 @@ const connectDB = async () => {
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOption));
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/doctors', doctorRouter)

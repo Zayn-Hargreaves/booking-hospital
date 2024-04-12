@@ -1,15 +1,19 @@
-import BookingSchema from "../models/BookingSchema.js"
+import Booking from "../models/BookingSchema.js"
 import Doctor from "../models/DoctorSchema.js"
 
 export const updateDoctor = async (req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
     try {
-        const updateDoctor = await Doctor.findByIdAndUpdate(id, { $set: req.body }, { new: true })
-        res.status(200).json({ success: true, message: "Cập nhật thành công", data: updateDoctor })
+        const updatedDoctor = await Doctor.findByIdAndUpdate(id, { $set: req.body }, { new: true });
+        if (!updatedDoctor) {
+            return res.status(404).json({ success: false, message: 'Doctor not found' });
+        }
+        res.status(200).json({ success: true, message: 'Doctor updated successfully', data: updatedDoctor });
     } catch (error) {
-        res.status(500).json({ success: false, message: "Cập nhật thất bại" })
+        console.error('Error updating doctor:', error);
+        res.status(500).json({ success: false, message: 'Failed to update doctor' });
     }
-}
+};
 export const deleteDoctor = async (req, res) => {
     const id = req.params.id;
     try {
@@ -51,17 +55,17 @@ export const getAllDoctor = async (req, res) => {
     }
 }
 
-export const getDoctorProfile = async(res, req) =>{
-    const doctorId = req.userId
+export const getDoctorProfile = async (req, res) => {
+    const doctorId = req.userId;
     try {
-        const doctor = await Doctor.findById(doctorId)
-        if(!doctor){
-            return res.status(404).json({success:false , message:"Bác sĩ này không tồn tại"})
+        const doctor = await Doctor.findById(doctorId);
+        if (!doctor) {
+            return res.status(404).json({ success: false, message: "Bác sĩ này không tồn tại" });
         }
-        const {password, ...rest} = doctor._doc
-        const appointment = await BookingSchema.find({doctor:doctorId})
-        res.status(200).json({success:true, message:"Thông tin hồ sơ đang được tải", data:{...rest, appointment}})
+        const { password, ...rest } = doctor._doc;
+        const appointments = await Booking.find({ doctor: doctorId });
+        res.status(200).json({ success: true, message: "Thông tin hồ sơ đang được tải", data: { ...rest, appointments } });
     } catch (error) {
-        res.status(500).json({success:false , message:"Có sự cố xảy ra, không thể truy cập được thông tin"})        
-    }   
-}
+        res.status(500).json({ success: false, message: "Đã có lỗi xảy ra, không thể lấy thông tin" });
+    }
+};

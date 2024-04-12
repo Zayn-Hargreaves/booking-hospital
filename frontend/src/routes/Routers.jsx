@@ -3,8 +3,8 @@ import Home from "../pages/Home"
 import Contact from "../pages/Contact"
 import Login from "../pages/Login"
 import SignUp from "../pages/Signup"
-import Doctors from "../pages/Doctors/Doctors"
-import DoctorDetails from "../pages/Doctors/DoctorDetails";
+import Doctors from "../components/Doctors/Doctors"
+import DoctorDetails from "../components/Doctors/DoctorDetails";
 import {Routes, Route} from "react-router-dom"
 import Services from "../pages/Services";
 import MyAccount from "../Dashboard/user-account/MyAccount";

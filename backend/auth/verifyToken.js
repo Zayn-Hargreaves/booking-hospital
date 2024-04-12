@@ -5,15 +5,15 @@ import User from"../models/UserSchema.js"
 export const authenticate = async (req, res, next) => {
   // Lấy token từ header
   const authToken = req.headers.authorization;
-  if (!authToken || !authToken.startsWith("Bearer")) {
+  if (!authToken || !authToken.startsWith('Bearer ')) {
     return res
       .status(401)
       .json({ success: false, message: "Không có mã thông báo, truy cập bị từ chối!" });
   }
   try {
     const token = authToken.split(" ")[1];
-    const decode = jwt.verify(token,process.env.JWT_SECRET_KEY)
-    req.userId = decode.userId
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    req.userId = decode.id
     req.role = decode.role
     // Xử lý mã thông báo ở đây (ví dụ: giải mã, xác thực người dùng, lấy thông tin người dùng)
     next(); // Chuyển tiếp cho middleware tiếp theo nếu mã thông báo hợp lệ
@@ -41,7 +41,7 @@ export const restrict = roles => async(req, res, next)=>{
     }else if(doctor){
         user=doctor
     }
-    console.log(user)
+
     if(!roles.includes(user.role)){
         return res.status(401).json({success:false, message:"Bạn không được uỷ quyền"})
     }

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom"
 import { BsArrowRight } from "react-icons/bs"
 import About from "../About/About";
 import SeviceList from "../Services/ServiceList";
-import DoctorList from "./Doctors/DoctorList";
+import DoctorList from "../components/Doctors/DoctorList";
 import FaqList from "../components/Faq/FaqList";
 import Testimonial from "../components/Testimonial/Testimonial";
 
