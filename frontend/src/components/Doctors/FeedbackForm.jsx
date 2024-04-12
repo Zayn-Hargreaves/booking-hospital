@@ -1,13 +1,47 @@
 import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
+import { useParams } from "react-router-dom";
+import { BASE_URL, token } from "../../config";
+import { toast } from "react-toastify"
+import HashLoader from "react-spinners/HashLoader";
 const FeedbackForm = () => {
     const [rating, setRating] = useState(0)
     const [hover, setHover] = useState(0)
     const [reviewText, setReviewText] = useState("")
-    
-    const handleSubmitReview = async(e) =>{
+    const [loading, setLoading] = useState(false)
+    const { id } = useParams()
+    const handleSubmitReview = async (e) => {
         e.preventDefault();
-    } 
+        setLoading(true);
+        try {
+            if (!rating || !reviewText) {
+                setLoading(false);
+                toast.error("Yêu cầu nhập đánh giá và nhận xét");
+            }
+    
+            const res = await fetch(`${BASE_URL}/doctors/${id}/reviews`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ rating, reviewText }),
+            });
+            console.log(res)
+            const result = await res.json();
+    
+            if (!res.ok) {
+                throw new Error(result.message);
+            }
+    
+            setLoading(false);
+            toast.success(result.message);
+        } catch (error) {
+            setLoading(false);
+            toast.error(error.message);
+        }
+    };
+    
     return (
         <form action="">
             <div>
@@ -46,8 +80,8 @@ const FeedbackForm = () => {
                     Hãy đưa ra nhận xét để giúp chúng tôi nâng cao chât lượng dịch vụ
                 </h3>
                 <textarea className="border border-solid border-[#0066ff34] focus:outline outline-primaryColor w-full px-4 py-3 rounded-md" rows="5" placeholder="Hãy để lại ý kiến của bạn"
-                onChange={(e)=>setReviewText(e.target.value)}></textarea>
-                <button type="submit" onClick={handleSubmitReview} className="btn" >Đăng tải ý kiến</button>
+                    onChange={(e) => setReviewText(e.target.value)}></textarea>
+                <button type="submit" onClick={handleSubmitReview} className="btn" >{loading ? <HashLoader size={25} color="#fff" /> : "Đăng tải ý kiến"}</button>
             </div>
         </form>
     )

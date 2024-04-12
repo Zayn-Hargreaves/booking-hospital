@@ -1,31 +1,48 @@
+import {convertTime} from "../../utils/convertTime.js"
 import React from "react";
-const SidePanel = () => {
+import {BASE_URL,token} from "../../config.js"
+import {toast} from "react-toastify"
+const SidePanel = ({doctorId, ticketPrice, timeSlots}) => {
+    const bookingHandler = async()=>{
+        try {
+            const res = await fetch(`${BASE_URL}/bookings/checkout-section/${doctorId}`,{
+                method:"post",
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            })
+            const data = await res.json()
+            if(!res.ok){
+                throw new Error(data.message +" thử lại")
+            }
+            if(data.session.url){
+                window.location.href = data.session.url
+            }
+        } catch (error) {
+            toast.error(error.message)           
+        }
+    }
     return (
         <div className="shadow-panelShadow p-3 lg:p-5 rounded-md">
             <div className="flex items-center justify-between">
                 <p className="text__para mt-0 font-semibold">Hoá đơn</p>
-                <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-bold">2.500.000 VND</span>
+                <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-bold">{ticketPrice} VND</span>
             </div>
             <div className="mt-[30px]">
                 <p className="text__para mt-0 font-semibold text-headingColor">
                     Các khung giờ có sẵn
                 </p>
                 <ul className="mt-3">
-                    <li className="flex items-center justify-between mb-2">
-                        <p className="text-[15px] leading-6 text-textColor font-semibold">Chủ Nhật</p>
-                        <p className="text-[15px] leading-6 text-textColor font-semibold">4:00 PM - 9:00 PM</p>
+                    {timeSlots?.map((item,index) =>{
+                    <li key={index} className="flex items-center justify-between mb-2">
+                        <p className="text-[15px] leading-6 text-textColor font-semibold">{item.day.charAt(0).toUpperCase() + item.day.slice(1)}</p>
+                        <p className="text-[15px] leading-6 text-textColor font-semibold">{item?.startingTime? convertTime(item.startingTime) : ''} - {item?.endingTime ? convertTime(review.endingTime) : ''}</p>
                     </li>
-                    <li className="flex items-center justify-between mb-2">
-                        <p className="text-[15px] leading-6 text-textColor font-semibold">Thứ Hai</p>
-                        <p className="text-[15px] leading-6 text-textColor font-semibold">7:30 AM - 9:00 PM</p>
-                    </li>
-                    <li className="flex items-center justify-between mb-2">
-                        <p className="text-[15px] leading-6 text-textColor font-semibold">Thứ Ba</p>
-                        <p className="text-[15px] leading-6 text-textColor font-semibold">8:00 AM - 9:00 PM</p>
-                    </li>
+                    })}
+                    
                 </ul>
             </div>
-            <button className="btn px-2 w-full rounded-md">Đặt lịch</button>
+            <button onClick={bookingHandler} className="btn px-2 w-full rounded-md">Đặt lịch</button>
         </div>
     )
 }

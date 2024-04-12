@@ -2,9 +2,9 @@ import DoctorCard from "./DoctorCard"
 import Testimonial from "../../components/Testimonial/Testimonial"
 import { BASE_URL } from "../../config.js"
 import useFetchData from "../../hooks/useFetchData.js"
-import Loader from "../../components/Loader/Loading.jsx"
 import Error from "../../components/Error/Error.jsx"
 import { useEffect, useState } from "react"
+import Loading from "../../components/Loader/Loading.jsx"
 const Doctors = () => {
     const [query, setQuery] = useState('')
     const [debounceQuery, setDebounceQuery] = useState("")
@@ -12,7 +12,6 @@ const Doctors = () => {
         setQuery(query.trim())
         console.log(query)
         console.log('handle search')
-
     }
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -20,7 +19,7 @@ const Doctors = () => {
         }, 700)
         return () => clearTimeout(timeout)
     }, [query])
-    const { data: doctors, loading, error } = useFetchData(`${BASE_URL}/doctors?query=${debounceQuery}`)
+    const { data:doctors, loading, error } = useFetchData(`${BASE_URL}/doctors?query=${debounceQuery}`)
     return <>
         <section className="bg-[#fff9ea]">
             <div className="container text-center">
@@ -34,15 +33,15 @@ const Doctors = () => {
             </div>
         </section>
         <section>
-            <div className="container">
-                {loading && <Loader />}
-                {error && <Error />}
-                {!loading && !error && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-                        {doctors.map((doctor) => (<DoctorCard doctor={doctor} key={doctor.id} />))}
-                    </div>
-                )}
-            </div>
+            {loading && <Loading/>}
+            {error && <Error/>}
+            { !loading && !error && (
+                 <div className="container">
+                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                     {doctors.map((doctor) => (<DoctorCard doctor={doctor} key={doctor._id} />))}
+                 </div>
+         </div>
+            )}
         </section>
         <section>
             <div className="container">

@@ -7,6 +7,7 @@ import authRouter from "./Routers/auth.js"
 import userRouter from "./Routers/user.js"
 import doctorRouter from "./Routers/doctor.js"
 import reviewRouter from "./Routers/review.js"
+import bookingRouter from "./Routers/booking.js"
 dotenv.config();
 
 const app = express();
@@ -41,6 +42,7 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/doctors', doctorRouter)
 app.use('/api/v1/reviews', reviewRouter)
+app.use('/api/v1/bookings', bookingRouter)
 // Bắt đầu máy chủ và kết nối đến MongoDB
 app.listen(port, () => {
     connectDB();

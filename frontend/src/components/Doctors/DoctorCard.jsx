@@ -28,7 +28,7 @@ const DoctorCard = ({ doctor }) => {
                     <h3 className="text-[14px] leading-6 font-[400] text-textColor">{experiences && experiences[0]?.hospital}</h3>
                 </div>
                 <Link
-                    to={`/doctors/${id}`}
+                    to={`/doctors/${doctor._id}`}
                     className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center group hover:bg-primaryColor hover:border-none">
                     <BsArrowRight className="group-hover:text-white w-6 h-5" />
                 </Link>

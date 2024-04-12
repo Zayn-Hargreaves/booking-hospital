@@ -34,22 +34,17 @@ export const getSingleDoctor = async (req, res) => {
 }
 export const getAllDoctor = async (req, res) => {
     try {
-        const { query } = req.query
-        let doctors;
+        const { query } = req.query;
+        let filter = { isApproved: "approved" };
         if (query) {
-            doctors = await Doctor.find({
-                isApproved: "approved",
-                $or: [
-                    { name: { $regex: query, $options: 'i' } },
-                    { specialization: { $regex: query, $options: "i" } }]
-            }).select("-password")
-        } else {
-            const doctors = await Doctor.find({ isApproved: 'approved' }).select("-password");
+            filter.$or = [
+                { name: { $regex: query, $options: 'i' } },
+                { specialization: { $regex: query, $options: 'i' } }
+            ];
         }
+        const doctors = await Doctor.find(filter).select("-password");
 
-
-        const doctor = await Doctor.find({}).select("-password")
-        res.status(200).json({ success: true, message: "Đã tìm thấy tài khoản", data: doctor })
+        res.status(200).json({ success: true, message: "Đã tìm thấy tài khoản", data: doctors });
     } catch (error) {
         res.status(500).json({ success: false, message: "Không tìm thấy tài khoản" })
     }

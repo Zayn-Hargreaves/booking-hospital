@@ -10,6 +10,7 @@ import Services from "../pages/Services";
 import MyAccount from "../Dashboard/user-account/MyAccount";
 import Dashboard from "../Dashboard/doctor-account/Dashboard";
 import ProtectedRouter from "./ProtectedRouter";
+import CheckoutSuccess from "../components/Doctors/CheckoutSuccess";
 const Routers =() =>{
     return <Routes>
         <Route path="/" element={<Home/>}>Trang chủ</Route>
@@ -20,6 +21,7 @@ const Routers =() =>{
         <Route path="/register" element={<SignUp/>}>Đăng ký</Route>
         <Route path="/contact" element={<Contact/>}>Liên hệ</Route>
         <Route path="/services" element={<Services/>}>Các dịch vụ</Route>
+        <Route path="/checkout-success" element={<CheckoutSuccess/>}>Các dịch vụ</Route>
         <Route path="/users/profile/me" element={<ProtectedRouter allowRoles={['patient']}><MyAccount/></ProtectedRouter>}>Tài khoản của tôi</Route>
         <Route path="/doctors/profile/me" element={<ProtectedRouter allowRoles={['doctor']}><Dashboard/></ProtectedRouter>}>Tài khoản của tôi</Route>
     
