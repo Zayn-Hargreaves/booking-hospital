@@ -11,7 +11,7 @@ import Appointments from "./Appointments.jsx";
 const Dashboard = () => {
     const { data, loading, error } = useGetProfile(`${BASE_URL}/doctors/profile/me`);
     const [tab, setTab] = useState("overview");
-    console.log(data)
+
     return (   
         <section>
             <div className="max-w-[1170px] px-5 mx-auto">

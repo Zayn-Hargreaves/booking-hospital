@@ -14,7 +14,6 @@ const DoctorDetails = () => {
     const {id}= useParams()
     const { data:doctor, loading, error } = useFetchData(`${BASE_URL}/doctors/${id}`)
     const {name, qualifications, experiences, timeSlots, reviews, bio, about, averageRating, totalRating, specialization, ticketPrice, photo} = doctor
-    console.log(doctor)
     return (
         <section>
             <div className="max-w-[1170px] px-5 mx-auto">
