@@ -37,7 +37,8 @@ const connectDB = async () => {
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOption));
+app.use(cors());
+app.options('*', cors());
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', userRouter)
 app.use('/api/v1/doctors', doctorRouter)
