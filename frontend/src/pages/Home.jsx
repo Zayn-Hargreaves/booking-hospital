@@ -29,7 +29,7 @@ const Home = () => {
                                 Sứ mệnh của chúng tôi là giúp bệnh nhân có cuộc sống khỏe mạnh và lâu dài.
                             </h1>
                             <p className="text__para">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel aspernatur, quas, corporis quam unde totam minus aliquam a eos, numquam error illum praesentium voluptates sunt officia vero dolore minima distinctio.
+                                Chúng tôi cam kết đem đến cho bạn những dịch vụ chăm sóc sức khỏe tốt nhất. Hãy để chúng tôi giúp bạn có một cuộc sống khỏe mạnh hơn.
                             </p>
                             <button className="btn">Đặt lịch khám bệnh</button>
                         </div>
