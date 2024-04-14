@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom"
-import { BASE_URL } from "../config";
 import {toast} from 'react-toastify'
 import{authContext} from "../context/AuthContext.jsx"
 import HashLoader from "react-spinners/HashLoader.js"
@@ -19,7 +18,7 @@ const Login = () => {
         event.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch(`${BASE_URL}/auth/login`, {
+            const res = await fetch(`https://booking-hospital-api.onrender.com/api/v1/auth/login`, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'

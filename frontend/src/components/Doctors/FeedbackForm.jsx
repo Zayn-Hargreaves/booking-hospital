@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import { useParams } from "react-router-dom";
-import { BASE_URL, token } from "../../config";
+import { token } from "../../config";
 import { toast } from "react-toastify"
 import HashLoader from "react-spinners/HashLoader";
 const FeedbackForm = () => {
@@ -19,7 +19,7 @@ const FeedbackForm = () => {
                 toast.error("Yêu cầu nhập đánh giá và nhận xét");
             }
     
-            const res = await fetch(`${BASE_URL}/doctors/${id}/reviews`, {
+            const res = await fetch(`https://booking-hospital-api.onrender.com/api/v1/doctors/${id}/reviews`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

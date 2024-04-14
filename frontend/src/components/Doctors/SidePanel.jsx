@@ -1,11 +1,11 @@
 import convertTime from "../../utils/convertTime.js"
 import React from "react";
-import { BASE_URL, token } from "../../config.js"
+import { token } from "../../config.js"
 import { toast } from "react-toastify"
 const SidePanel = ({ doctorId, ticketPrice, timeSlots }) => {
     const bookingHandler = async () => {
         try {
-            const res = await fetch(`${BASE_URL}/bookings/checkout-section/${doctorId}`, {
+            const res = await fetch(`https://booking-hospital-api.onrender.com/api/v1/bookings/checkout-section/${doctorId}`, {
                 method: "post",
                 headers: {
                     Authorization: `Bearer ${token}`

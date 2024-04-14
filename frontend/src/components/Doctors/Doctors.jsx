@@ -1,6 +1,5 @@
 import DoctorCard from "./DoctorCard"
 import Testimonial from "../../components/Testimonial/Testimonial"
-import { BASE_URL } from "../../config.js"
 import useFetchData from "../../hooks/useFetchData.js"
 import Error from "../../components/Error/Error.jsx"
 import { useEffect, useState } from "react"
@@ -19,7 +18,7 @@ const Doctors = () => {
         }, 700)
         return () => clearTimeout(timeout)
     }, [query])
-    const { data:doctors, loading, error } = useFetchData(`${BASE_URL}/doctors?query=${debounceQuery}`)
+    const { data:doctors, loading, error } = useFetchData(`https://booking-hospital-api.onrender.com/api/v1/doctors?query=${debounceQuery}`)
     return <>
         <section className="bg-[#fff9ea]">
             <div className="container text-center">

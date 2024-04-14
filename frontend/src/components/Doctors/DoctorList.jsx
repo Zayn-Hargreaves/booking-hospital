@@ -1,10 +1,9 @@
 import DoctorCard from "./DoctorCard";
-import { BASE_URL } from "../../config.js"
 import useFetchData from "../../hooks/useFetchData.js"
 import Error from "../../components/Error/Error.jsx"
 import Loading from "../../components/Loader/Loading.jsx";
 const DoctorList = () => {
-    const { data:doctors, loading, error } = useFetchData(`${BASE_URL}/doctors`)
+    const { data:doctors, loading, error } = useFetchData(`https://booking-hospital-api.onrender.com/api/v1/doctors`)
     return (
         <>
             {loading && <Loading />}

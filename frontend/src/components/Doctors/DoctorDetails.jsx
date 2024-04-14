@@ -3,7 +3,6 @@ import starIcon from "../../assets/images/Star.png"
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
-import { BASE_URL } from "../../config.js"
 import useFetchData from "../../hooks/useFetchData.js"
 import Loader from "../../components/Loader/Loading.jsx"
 import Error from "../../components/Error/Error.jsx"
@@ -12,7 +11,7 @@ const DoctorDetails = () => {
     const [tab, setTab] = useState('about')
 
     const {id}= useParams()
-    const { data:doctor, loading, error } = useFetchData(`${BASE_URL}/doctors/${id}`)
+    const { data:doctor, loading, error } = useFetchData(`https://booking-hospital-api.onrender.com/api/v1/doctors/${id}`)
     const {name, qualifications, experiences, timeSlots, reviews, bio, about, averageRating, totalRating, specialization, ticketPrice, photo} = doctor
     return (
         <section>

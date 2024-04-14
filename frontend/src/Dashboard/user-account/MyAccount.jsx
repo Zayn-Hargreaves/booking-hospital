@@ -4,7 +4,6 @@ import userImg from "../../assets/images/doctor-img01.png"
 import MyBookings from "./MyBooking";
 import Profiles from "./Profiles";
 import useGetProfile from "../../hooks/useFetchData.js"
-import { BASE_URL } from "../../config.js"
 import Loading from "../../components/Loader/Loading.jsx";
 import Error from "../../components/Error/Error.jsx"
 const MyAccount = () => {
@@ -12,7 +11,7 @@ const MyAccount = () => {
     const handleLogout = () => {
         dispatch({ type: "LOGOUT" })
     }
-    const { data: userData, loading, error } = useGetProfile(`${BASE_URL}/users/profile/me`)
+    const { data: userData, loading, error } = useGetProfile(`https://booking-hospital-api.onrender.com/api/v1/users/profile/me`)
     const [tab, setTab] = useState('bookings')
     return (
         <section>

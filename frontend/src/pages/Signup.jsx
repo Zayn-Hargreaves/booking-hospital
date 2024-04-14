@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SignUpImg from "../assets/images/signup.gif"
 import uploadImageToCloudinary from "../utils/uploadCloudinary.js";
-import { BASE_URL } from "../config.js"
 import {toast} from 'react-toastify'
 import HashLoader from "react-spinners/HashLoader.js"
 const Signup = () => {
@@ -33,7 +32,7 @@ const Signup = () => {
         event.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch(`${BASE_URL}/auth/register`,{
+            const res = await fetch(`https://booking-hospital-api.onrender.com/api/v1/auth/register`,{
                 method:'post',
                 headers:{
                     'Content-Type':'application/json'

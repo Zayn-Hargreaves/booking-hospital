@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { AiOutlineDelete } from "react-icons/ai"
 import uploadImageToCloudinary from "../../utils/uploadCloudinary.js"
-import { BASE_URL, token } from "../../config.js"
+import { token } from "../../config.js"
 import { toast } from "react-toastify"
 const Profile = ({ doctorData }) => {
     const [formData, setFormData] = useState({
@@ -80,7 +80,7 @@ const Profile = ({ doctorData }) => {
         e.preventDefault();
         // Logic to update profile
         try {
-            const res = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
+            const res = await fetch(`https://booking-hospital-api.onrender.com/api/v1/doctors/${doctorData._id}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json',

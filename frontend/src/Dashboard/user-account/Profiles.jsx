@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import uploadImageToCloudinary from "../../utils/uploadCloudinary.js";
-import { BASE_URL ,token } from "../../config.js"
 import {toast} from 'react-toastify'
 import HashLoader from "react-spinners/HashLoader.js"
 
@@ -34,7 +33,7 @@ const Profiles = ({user}) => {
         event.preventDefault();
         setLoading(true);
         try {
-            const res = await fetch(`${BASE_URL}/users/${user._id}`,{
+            const res = await fetch(`https://booking-hospital-api.onrender.com/api/v1/users/${user._id}`,{
                 method:'put',
                 headers:{
                     'Content-Type':'application/json',

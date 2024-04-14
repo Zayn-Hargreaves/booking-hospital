@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import Loader from "../../components/Loader/Loading";
 import Error from "../../components/Error/Error";
 import useGetProfile from "../../hooks/useFetchData.js";
-import { BASE_URL } from "../../config.js";
 import Tabs from "./Tabs.jsx";
 import starIcon from "../../assets/images/Star.png"
 import DoctorAbout from "../../components/Doctors/DoctorAbout.jsx"
 import Profile from "./Profile.jsx";
 import Appointments from "./Appointments.jsx";
 const Dashboard = () => {
-    const { data, loading, error } = useGetProfile(`${BASE_URL}/doctors/profile/me`);
+    const { data, loading, error } = useGetProfile(`https://booking-hospital-api.onrender.com/api/v1/doctors/profile/me`);
     const [tab, setTab] = useState("overview");
 
     return (   
